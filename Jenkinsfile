@@ -3,28 +3,19 @@ pipeline {
     stages {
         stage('Docker Build') {
             steps {
-                sh 'docker build -t ramon/python_app:latest .'
+                sh 'docker build -t ramon/python_app:v1 .'
             }
-        stage('Publish to Nexus Repository Manager') {
+        stage('Push docker image to nexus') {
             steps {
-                  nexusArtifactUploader(
-                    nexusVersion: 'nexus3',
-                    protocol: 'http',
-                    nexusUrl: '192.168.0.142:8081',
-                    groupId: 'com.example',
-                    version: '3.43.0-01',
-                    repository: 'alm_dockerhub',
-                    credentialsId: 'jenkins-user',
-                    artifacts: [
-                        [artifactId: alm_dockerhub,
-                            classifier: '',
-                            file: 'python_app',
-                            type: 'docker']
-                    ]
-                 )
+                sh 'docker login -u jenkins-user -p Ir0nm1n82! 192.168.0.142:8123'
+                sh 'docker tag ramon/python_app:v1 192.168.0.142:8123/ramon/python_app:v1'
+                sh 'docker push 192.168.0.142:8123/ramon/python_app:latest'
+                sh 'docker rmi -f $(docker images --filter=reference="192.168.0.142:8123/ramon/python_app*")'
+                sh 'docker logout 192.168.0.142:8123'
             }
+        }
         }
         }
     }
-}
+
 
