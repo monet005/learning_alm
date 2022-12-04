@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Docker Build) {
             steps {
-                sh 'docker build ramon/python_app:latest .'
+                sh 'docker build -t ramon/python_app:latest .'
             }
         }
     }
