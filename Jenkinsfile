@@ -5,6 +5,7 @@ pipeline {
             steps {
                 sh 'docker build -t ramon/python_app:v1 .'
             }
+        }
         stage('Push docker image to nexus') {
             steps {
                 sh 'docker login -u jenkins-user -p Ir0nm1n82! 192.168.0.142:8123'
@@ -14,8 +15,7 @@ pipeline {
                 sh 'docker logout 192.168.0.142:8123'
             }
         }
-        }
-        }
     }
+}
 
 
