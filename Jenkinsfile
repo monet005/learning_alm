@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('Docker Build') {
             steps {
+                sh 'echo ${params.version}'
                 sh 'docker build -t ramon/python_app:${params.version} .'
             }
         }
