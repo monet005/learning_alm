@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'docker' }
+    agent { node { label 'docker' } }
     parameters {
         string(name: "VERSION", defaultValue: "latest", trim: true, description: "Enter the version number")
     }
